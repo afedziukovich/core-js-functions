@@ -32,8 +32,12 @@ function getCurrentFunctionName() {
  *   getFunctionBody(hiHello) => "function hiHello() { console.log('hello world'); }"
  *
  */
-function getFunctionBody(/* func */) {
-  throw new Error('Not implemented');
+function getFunctionBody(func) {
+  if (typeof func !== 'function') {
+    return '';
+  }
+
+  return func.toString();
 }
 
 /**
@@ -51,11 +55,7 @@ function getFunctionBody(/* func */) {
  *
  */
 function getArgumentsCount(funcs) {
-  if (typeof func !== 'function') {
-    throw new TypeError('Expected a function');
-  }
-  const functionString = func.toString();
-  return functionString;
+  return funcs.map((func) => func.length);
 }
 
 /**
@@ -75,8 +75,8 @@ function getArgumentsCount(funcs) {
  *
  */
 function getPowerFunction(exponent) {
-  return function powerFunction(x) {
-    return Math.pow(x, exponent);
+  return function power(x) {
+    return x ** exponent;
   };
 }
 
@@ -94,16 +94,20 @@ function getPowerFunction(exponent) {
  *   getPolynom()      => null
  */
 function getPolynom(...coefficients) {
-  if (coefficients.length === 0) return null;
-  return function(x) {
-    return coefficients.reduce((result, coefficient, index) => {
-      const power = coefficients.length - 1 - index;
-      return result + coefficient * Math.pow(x, power);
-    }, 0);
+  if (coefficients.length === 0) {
+    return null;
+  }
+  return function polynom(x) {
+    let result = 0;
+
+    for (let i = 0; i < coefficients.length; i += 1) {
+      const power = coefficients.length - 1 - i;
+      result += coefficients[i] * x ** power;
+    }
+
+    return result;
   };
 }
-
-
 
 /**
  * Memoizes passed function and returns function
