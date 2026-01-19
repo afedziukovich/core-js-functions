@@ -18,7 +18,7 @@
  *
  */
 function getCurrentFunctionName() {
-  throw new Error('Not implemented');
+  return getCurrentFunctionName.name;
 }
 
 /**
@@ -50,8 +50,12 @@ function getFunctionBody(/* func */) {
  *  ]) => [0, 1, 2]
  *
  */
-function getArgumentsCount(/* funcs */) {
-  throw new Error('Not implemented');
+function getArgumentsCount(funcs) {
+  if (typeof func !== 'function') {
+    throw new TypeError('Expected a function');
+  }
+  const functionString = func.toString();
+  return functionString;
 }
 
 /**
@@ -70,8 +74,10 @@ function getArgumentsCount(/* funcs */) {
  *   power05(16) => 4
  *
  */
-function getPowerFunction(/* exponent */) {
-  throw new Error('Not implemented');
+function getPowerFunction(exponent) {
+  return function powerFunction(x) {
+    return Math.pow(x, exponent);
+  };
 }
 
 /**
@@ -87,8 +93,14 @@ function getPowerFunction(/* exponent */) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom(/* ...coefficients */) {
-  throw new Error('Not implemented');
+function getPolynom(...coefficients) {
+  if (coefficients.length === 0) return null;
+  return function(x) {
+    return coefficients.reduce((result, coefficient, index) => {
+      const power = coefficients.length - 1 - index;
+      return result + coefficient * Math.pow(x, power);
+    }, 0);
+  };
 }
 
 
