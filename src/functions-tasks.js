@@ -75,9 +75,10 @@ function getArgumentsCount(funcs) {
  *
  */
 function getPowerFunction(exponent) {
-  return function power(x) {
+  const power = function (x) {
     return x ** exponent;
   };
+  return power;
 }
 
 /**
@@ -127,7 +128,7 @@ function memoize(func) {
   let cachedResult;
   let hasCached = false;
 
-  return function() {
+  return function () {
     if (!hasCached) {
       cachedResult = func();
       hasCached = true;
